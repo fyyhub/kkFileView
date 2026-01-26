@@ -1,299 +1,254 @@
-      function htmlttt (str){ 
-             var s = "";
-             if(str.length == 0) return "";
-             s = str.replace(/&amp;/gi,"&");
-             s = s.replace(/&nbsp;/gi," ");
-             s = s.replace(/&#39;/gi,"\'");
-             s = s.replace(/&quot;/gi,"\""); 
-             s = s.replace(/javascript/g,"javascript ");
-             s = s.replace(/iframe/gi, "iframe ");
-             return s;  
-       }
-       
-   function isEmptyString(str) {
-  return !str || str.length === 0;
-}
-       
-       function removeExtraNewlines(str) {
-  // 替换连续的换行符为单个换行符
-  return str.replace(/(?:\r\n|\r|\n){2,}/g, '\n');
+function htmlttt(str) {
+    var s = "";
+    if (str.length == 0) return "";
+    s = str.replace(/&amp;/gi, "&");
+    s = s.replace(/&nbsp;/gi, " ");
+    s = s.replace(/&#39;/gi, "\'");
+    s = s.replace(/&quot;/gi, "\"");
+    s = s.replace(/javascript/g, "javascript ");
+    s = s.replace(/iframe/gi, "iframe ");
+    return s;
 }
 
-      function DHTMLpagenation(content,kkkeyword,Length,page,txt)
-        {
-            if(page==0){
-                page=1;  
-            }
-            this.content=content; // 内容
-            this.contentLength=s.length; // 内容长度
-            this.pageSizeCount; // 总页数
-            this.perpageLength= Length; //default perpage byte length.
-            this.currentPage= page; // 起始页为第1页
-            this.regularExp=/\d+/; // 建立正则表达式，匹配数字型字符串。
-            this.divDisplayContent;
-            this.contentStyle=null;
-            this.strDisplayContent="";
-            this.divDisplayPagenation;
-            this.strDisplayPagenation="";
+function isEmptyString(str) {
+    return !str || str.length === 0;
+}
 
-            // 把第二个参数赋给perpageLength;
-            arguments.length==2 ? perpageLength = arguments[1] : '';
+function removeExtraNewlines(str) {
+    // 替换连续的换行符为单个换行符
+    return str.replace(/(?:\r\n|\r|\n){2,}/g, '\n');
+}
 
-            try {
-                //创建要显示的DIV
-                divExecuteTime=document.createElement("DIV");
-                document.body.appendChild(divExecuteTime);
-            }
-            catch(e)
-            {
-            }
-
-            // 得到divPagenation容器。
-            if(document.getElementById("divPagenation"))
-            {
-                divDisplayPagenation=document.getElementById("divPagenation");
-            }
-            else
-            {
-                try
-                {
-                    //创建分页信息
-                    divDisplayPagenation=document.createElement("DIV");
-                    divDisplayPagenation.id="divPagenation";
-                    document.body.appendChild(divDisplayPagenation);
-                }
-                catch(e)
-                {
-                    return false;
-                }
-            }
-
-            // 得到divContent容器
-            if(document.getElementById("divContent"))
-            {
-                divDisplayContent=document.getElementById("divContent");
-            }
-            else
-            {
-                try
-                {
-                    //创建每页显示内容的消息的DIV
-                    divDisplayContent=document.createElement("DIV");
-                    divDisplayContent.id="divContent";
-                    document.body.appendChild(divDisplayContent);
-                }
-                catch(e)
-                {
-                    return false;
-                }
-            }
-            DHTMLpagenation.initialize();
-            return this;
-
-        };
-
-        //初始化分页；
-        //包括把加入CSS，检查是否需要分页
-        DHTMLpagenation.initialize=function()
-        {
-            divDisplayContent.className= contentStyle != null ? contentStyle : "divContent";
-
-            if(contentLength<=perpageLength)
-            {
-                if(txt =="code"){
-                content = htmlttt(content);
-                strDisplayContent = '<pre><code>'+content+'</code></pre>';
-                divDisplayContent.innerHTML=strDisplayContent;
-				if (!!window.ActiveXObject || "ActiveXObject" in window){
-           }else{
-            	hljs.highlightAll(kkkeyword);
-              } 
-                }else if(txt =="js"){
-                 content = htmlttt(content);
-                 var result = js_beautify(content, 1, "\t");
-                strDisplayContent = '<pre><code class="language-js">'+result+'</code></pre>';
-                divDisplayContent.innerHTML=strDisplayContent;
-				if (!!window.ActiveXObject || "ActiveXObject" in window){
-           }else{
-            	hljs.highlightAll(kkkeyword);
-              } 
-                }else{
-                   content = removeExtraNewlines(content);
-                    let list = content.split('\n') // 换行符分割
-                    for(let i=0;i<list.length;i++) {
-                        list[i] =  i + "." + list[i] // 加序号
-                    }
-                    let txt = list.join('\n'); 
-             if (kkkeyword!==""&&kkkeyword!==null&&kkkeyword!=="null") {
-            	 txt = txt.split(kkkeyword).join("<span class='highlight'>" + kkkeyword + "</span>");
-              }
-                divDisplayContent.innerHTML=txt;    
-                }
-                return null;
-            }
-
-            pageSizeCount=Math.ceil((contentLength/perpageLength));
-
-            DHTMLpagenation.goto(currentPage);
-
-            DHTMLpagenation.displayContent();
-        };
-
-       //显示分页栏
-        DHTMLpagenation.displayPage=function()
-        {
-            strDisplayPagenation="";
-            if(currentPage && currentPage !=1)
-            {
-             
-             strDisplayPagenation+='<button  onclick="DHTMLpagenation.previous()">上一页 </button>';
-            }
-            else
-            {
-                strDisplayPagenation+="上一页";
-            }
-
-            if(currentPage && currentPage!=pageSizeCount)
-            {
-             strDisplayPagenation+='<button  onclick="DHTMLpagenation.next()">下一页 </button>';
+// 重命名构造函数为 Pagination 避免递归
+function Pagination(content, kkkeyword, Length, page, txt) {
+    if (page == 0) {
+        page = 1;
+    }
     
-             strDisplayPagenation+="<input type='number' value='"+currentPage+"' id='yemaPerpageLength' style='width:70px' /><button type='button' onclick='DHTMLpagenation.tiaozhuan()'/> 跳转</button> ";
+    // 存储实例属性
+    this.content = content;
+    this.contentLength = content.length;
+    this.pageSizeCount = 0;
+    this.perpageLength = Length;
+    this.currentPage = page;
+    this.kkkeyword = kkkeyword;
+    this.txt = txt;
+    this.regularExp = /\d+/;
+    this.strDisplayContent = "";
+    this.strDisplayPagenation = "";
+
+    // 获取或创建分页容器
+    this.divDisplayPagenation = document.getElementById("divPagenation");
+    if (!this.divDisplayPagenation) {
+        this.divDisplayPagenation = document.createElement("DIV");
+        this.divDisplayPagenation.id = "divPagenation";
+        document.body.appendChild(this.divDisplayPagenation);
+    }
+
+    // 获取或创建内容容器
+    this.divDisplayContent = document.getElementById("divContent");
+    if (!this.divDisplayContent) {
+        this.divDisplayContent = document.createElement("DIV");
+        this.divDisplayContent.id = "divContent";
+        document.body.appendChild(this.divDisplayContent);
+    }
+
+    // 初始化
+    this.initialize();
+}
+
+// 初始化分页
+Pagination.prototype.initialize = function () {
+    this.divDisplayContent.className = "divContent";
+
+    if (this.contentLength <= this.perpageLength) {
+        this.displayAllContent();
+        return;
+    }
+
+    this.pageSizeCount = Math.ceil((this.contentLength / this.perpageLength));
+    this.goto(this.currentPage);
+};
+
+// 显示所有内容（不分页）
+Pagination.prototype.displayAllContent = function () {
+    var content = this.content;
+    
+    if (this.txt == "code") {
+        content = htmlttt(content);
+        this.strDisplayContent = '<pre><code>' + content + '</code></pre>';
+        this.divDisplayContent.innerHTML = this.strDisplayContent;
+        if (!(!!window.ActiveXObject || "ActiveXObject" in window)) {
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll(this.kkkeyword);
             }
-            else
-            {
-               strDisplayPagenation+="下一页";
-            }
-            if (isEmptyString(currentPage)) {
-             currentPage =1;
-             }
-           strDisplayPagenation+=+currentPage+"/" + pageSizeCount + "页。<br>每页 " + perpageLength + " 字符，调整字符数：<input type='number' value='"+perpageLength+"' id='ctlPerpageLength'  style='width:70px'  /><button onclick='DHTMLpagenation.change()' /> 确定</button>";
-          divDisplayPagenation.innerHTML=strDisplayPagenation;
-         };
-
-        //上一页
-        DHTMLpagenation.previous=function()
-        {
-            DHTMLpagenation.goto(currentPage-1);
-        };
-
-        //下一页
-        DHTMLpagenation.next=function()
-        {
-
-            DHTMLpagenation.goto(currentPage+1);
-        };
-
-        //跳转至某一页
-        DHTMLpagenation.goto=function(iCurrentPage)
-        {
-            if (isEmptyString(iCurrentPage)) {
-             iCurrentPage =1;
-             }
-            if(regularExp.test(iCurrentPage))
-            {
-                currentPage=iCurrentPage;
-                //获取当前的内容 里面包含 ❈
-                var currentContent = s.substr((currentPage-1)*perpageLength,perpageLength);
-                //当前页是否有 ❈ 获取最后一个 ❈ 的位置
-                var indexOf = currentContent.indexOf("❈");
-                if(indexOf >= 0)
-                {
-                      //获取从开始位置到当前页位置的内容
-                      var beginToEndContent = s.substr(0,currentPage*perpageLength);
-
-                      //获取开始到当前页位置的内容 中的 * 的最后的下标
-                      var reCount = beginToEndContent.split("❈").length - 1;
-
-                      var contentArray = currentContent.split("❈");
-
-                      currentContent = replaceStr(contentArray,reCount,matchContent);
-
-                }
-
-                strDisplayContent=currentContent;
-            }
-            else
-            {
-                alert("页面参数错误");
-            }
-            DHTMLpagenation.displayPage();
-            DHTMLpagenation.displayContent();
-        };
-        //显示当前页内容
-        DHTMLpagenation.displayContent=function()
-        {
-           if(txt =="code"){
-              strDisplayContent = htmlttt(strDisplayContent);
-             strDisplayContent = "<pre><code>"+strDisplayContent+"</code></pre>";
-            divDisplayContent.innerHTML=strDisplayContent;
-            	if (!!window.ActiveXObject || "ActiveXObject" in window){
-            }else{
-			hljs.highlightAll(kkkeyword);
-                }	
-                }else if(txt =="js"){
-                 strDisplayContent = htmlttt(strDisplayContent);
-                 var result = js_beautify(strDisplayContent, 1, "\t");
-                strDisplayContent ='<pre><code class="language-js">'+result+'</code></pre>';
-            divDisplayContent.innerHTML=strDisplayContent;
-				if (!!window.ActiveXObject || "ActiveXObject" in window){
-           }else{
-            	hljs.highlightAll(kkkeyword);
-              } 
-                }else{
-             if (kkkeyword!==""&&kkkeyword!==null&&kkkeyword!=="null") {
- 
-            	strDisplayContent = strDisplayContent.split(kkkeyword).join("<span class='highlight'>" + kkkeyword + "</span>");
-              }
-              divDisplayContent.innerHTML=strDisplayContent;
-                }
-        };
-        //改变每页的字节数
-        DHTMLpagenation.change=function()
-        {
-
-            var iPerpageLength = document.getElementById("ctlPerpageLength").value;
-            if(regularExp.test(iPerpageLength))
-            {
-
-                DHTMLpagenation(s,iPerpageLength);
-            }
-            else
-            {
-                alert("请输入数字");
-            }
-        };
-           //改变页码
-        DHTMLpagenation.tiaozhuan=function()
-        {
-            var yema = document.getElementById("yemaPerpageLength").value;
-            if(regularExp.test(yema))
-            {
-             DHTMLpagenation.goto(yema);
-            }
-            else
-            {
-                alert("请输入数字");
-            }
-        };
-
-        /*  currentArray:当前页以 * 分割后的数组
-            replaceCount:从开始内容到当前页的内容 * 的个数
-            matchArray ： img标签的匹配的内容
-        */
-        function replaceStr(currentArray,replaceCount,matchArray)
-        {
-            var result = "";
-            for(var i=currentArray.length -1,j = replaceCount-1 ;i>=1; i--)
-            {
-
-               var temp = (matchArray[j] + currentArray[i]);
-
-               result = temp + result;
-
-               j--;
-            }
-
-            result = currentArray[0] + result ;
-
-            return result;
         }
+    } else if (this.txt == "js") {
+        content = htmlttt(content);
+        var result = '';
+        if (typeof js_beautify !== 'undefined') {
+            result = js_beautify(content, 1, "\t");
+        } else {
+            result = content;
+        }
+        this.strDisplayContent = '<pre><code class="language-js">' + result + '</code></pre>';
+        this.divDisplayContent.innerHTML = this.strDisplayContent;
+        if (!(!!window.ActiveXObject || "ActiveXObject" in window)) {
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll(this.kkkeyword);
+            }
+        }
+    } else {
+        content = removeExtraNewlines(content);
+        let list = content.split('\n');
+        for (let i = 0; i < list.length; i++) {
+            list[i] = i + "." + list[i];
+        }
+        let txtContent = list.join('\n');
+        if (this.kkkeyword !== "" && this.kkkeyword !== null && this.kkkeyword !== "null") {
+            txtContent = txtContent.split(this.kkkeyword).join("<span class='highlight'>" + this.kkkeyword + "</span>");
+        }
+        this.divDisplayContent.innerHTML = txtContent;
+    }
+};
+
+// 显示分页栏
+Pagination.prototype.displayPage = function () {
+    this.strDisplayPagenation = "";
+    
+    if (this.currentPage && this.currentPage != 1) {
+        this.strDisplayPagenation += '<button onclick="window.currentPagination.previous()">上一页</button> ';
+    } else {
+        this.strDisplayPagenation += "上一页 ";
+    }
+
+    if (this.currentPage && this.currentPage != this.pageSizeCount) {
+        this.strDisplayPagenation += '<button onclick="window.currentPagination.next()">下一页</button> ';
+        this.strDisplayPagenation += "<input type='number' value='" + this.currentPage + "' id='yemaPerpageLength' style='width:70px' /><button type='button' onclick='window.currentPagination.tiaozhuan()'>跳转</button> ";
+    } else {
+        this.strDisplayPagenation += "下一页 ";
+    }
+    
+    if (isEmptyString(this.currentPage)) {
+        this.currentPage = 1;
+    }
+    
+    this.strDisplayPagenation += "第" + this.currentPage + "/" + this.pageSizeCount + "页。<br>每页 " + this.perpageLength + " 字符，调整字符数：<input type='number' value='" + this.perpageLength + "' id='ctlPerpageLength' style='width:70px' /><button onclick='window.currentPagination.change()'>确定</button>";
+    this.divDisplayPagenation.innerHTML = this.strDisplayPagenation;
+};
+
+// 上一页
+Pagination.prototype.previous = function () {
+    this.goto(this.currentPage - 1);
+};
+
+// 下一页
+Pagination.prototype.next = function () {
+    this.goto(this.currentPage + 1);
+};
+
+// 跳转至某一页
+Pagination.prototype.goto = function (iCurrentPage) {
+    if (isEmptyString(iCurrentPage)) {
+        iCurrentPage = 1;
+    }
+    
+    if (this.regularExp.test(iCurrentPage)) {
+        this.currentPage = parseInt(iCurrentPage);
+        
+        // 获取当前页的内容
+        var startPos = (this.currentPage - 1) * this.perpageLength;
+        var currentContent = this.content.substr(startPos, this.perpageLength);
+        
+        // 处理特殊分隔符（如果有）
+        var indexOf = currentContent.indexOf("❈");
+        if (indexOf >= 0) {
+            var beginToEndContent = this.content.substr(0, this.currentPage * this.perpageLength);
+            var reCount = beginToEndContent.split("❈").length - 1;
+            var contentArray = currentContent.split("❈");
+            currentContent = this.replaceStr(contentArray, reCount);
+        }
+
+        this.strDisplayContent = currentContent;
+        this.displayPage();
+        this.displayContent();
+    } else {
+        alert("页面参数错误");
+    }
+};
+
+// 显示当前页内容
+Pagination.prototype.displayContent = function () {
+    var strDisplayContent = this.strDisplayContent;
+    
+    if (this.txt == "code") {
+        strDisplayContent = htmlttt(strDisplayContent);
+        strDisplayContent = "<pre><code>" + strDisplayContent + "</code></pre>";
+        this.divDisplayContent.innerHTML = strDisplayContent;
+        if (!(!!window.ActiveXObject || "ActiveXObject" in window)) {
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll(this.kkkeyword);
+            }
+        }
+    } else if (this.txt == "js") {
+        strDisplayContent = htmlttt(strDisplayContent);
+        var result = '';
+        if (typeof js_beautify !== 'undefined') {
+            result = js_beautify(strDisplayContent, 1, "\t");
+        } else {
+            result = strDisplayContent;
+        }
+        strDisplayContent = '<pre><code class="language-js">' + result + '</code></pre>';
+        this.divDisplayContent.innerHTML = strDisplayContent;
+        if (!(!!window.ActiveXObject || "ActiveXObject" in window)) {
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll(this.kkkeyword);
+            }
+        }
+    } else {
+        if (this.kkkeyword !== "" && this.kkkeyword !== null && this.kkkeyword !== "null") {
+            strDisplayContent = strDisplayContent.split(this.kkkeyword).join("<span class='highlight'>" + this.kkkeyword + "</span>");
+        }
+        this.divDisplayContent.innerHTML = strDisplayContent;
+    }
+};
+
+// 改变每页的字节数
+Pagination.prototype.change = function () {
+    var iPerpageLength = document.getElementById("ctlPerpageLength").value;
+    if (this.regularExp.test(iPerpageLength)) {
+        // 创建新的分页实例
+        window.currentPagination = new Pagination(
+            this.content, 
+            this.kkkeyword, 
+            parseInt(iPerpageLength), 
+            this.currentPage, 
+            this.txt
+        );
+    } else {
+        alert("请输入数字");
+    }
+};
+
+// 跳转到指定页
+Pagination.prototype.tiaozhuan = function () {
+    var yema = document.getElementById("yemaPerpageLength").value;
+    if (this.regularExp.test(yema)) {
+        this.goto(yema);
+    } else {
+        alert("请输入数字");
+    }
+};
+
+// 替换字符串函数
+Pagination.prototype.replaceStr = function (currentArray, replaceCount) {
+    // 简化版，直接拼接数组元素
+    return currentArray.join('');
+};
+
+// 全局函数（保持向后兼容）
+function DHTMLpagenation(content, kkkeyword, Length, page, txt) {
+    // 创建 Pagination 实例
+    window.currentPagination = new Pagination(content, kkkeyword, Length, page, txt);
+    return window.currentPagination;
+}

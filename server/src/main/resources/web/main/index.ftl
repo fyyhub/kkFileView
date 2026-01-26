@@ -29,44 +29,63 @@
             transform: translate(-50%, -50%);
             -ms-transform: translate(-50%, -50%);
         }
+        
         /* 分页样式调整 */
         .fixed-table-pagination {
-            padding: 10px 0;
+            padding: 15px 0;
+            border-top: 1px solid #e7eaec;
+            margin-top: 15px;
         }
+        .pagination > li > a,
+        .pagination > li > span {
+            margin: 0 3px;
+            border-radius: 3px;
+            color: #337ab7;
+        }
+        .pagination > .active > a,
+        .pagination > .active > a:hover,
+        .pagination > .active > span,
+        .pagination > .active > span:hover {
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+        
         /* 目录导航样式 */
         .breadcrumb {
             background-color: #f8f9fa;
-            padding: 8px 15px;
-            margin-bottom: 10px;
-        }
-        .breadcrumb a {
-            color: #0275d8;
-            text-decoration: none;
-        }
-        .breadcrumb a:hover {
-            text-decoration: underline;
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #e7eaec;
         }
         .breadcrumb > li + li:before {
-            content: ">\00a0";
-            padding: 0 5px;
+            content: ">";
+            padding: 0 8px;
             color: #6c757d;
         }
         .file-icon {
-            margin-right: 5px;
+            margin-right: 8px;
+            font-size: 14px;
         }
+        
+        /* 表格行样式 */
         .folder-row {
             background-color: #f8f9fa;
-            font-weight: bold;
+            font-weight: 500;
         }
-        .file-row {
-            background-color: #ffffff;
+        .folder-row:hover {
+            background-color: #e9ecef;
         }
-        /* 修正URL链接颜色为黑色 */
+        .file-row:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* 修正URL链接颜色 */
         .breadcrumb a, 
         .breadcrumb a:hover {
             color: #333 !important;
+            text-decoration: none;
         }
-        /* 修正文件链接颜色 */
         #table a:not(.btn) {
             color: #333 !important;
             text-decoration: none;
@@ -75,13 +94,166 @@
             color: #0275d8 !important;
             text-decoration: underline;
         }
-        /* 按钮链接保持原有颜色 */
+        
+        /* 按钮样式优化 */
         .btn {
-            color: #fff !important;
+            border-radius: 3px;
+            padding: 5px 12px;
         }
-        .btn.btn-default {
-            color: #333 !important;
+        .btn-sm {
+            padding: 3px 8px;
+            font-size: 12px;
         }
+        .btn-success {
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+        .btn-success:hover {
+            background-color: #449d44;
+            border-color: #398439;
+        }
+        .btn-primary {
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+        .btn-primary:hover {
+            background-color: #286090;
+            border-color: #204d74;
+        }
+        .btn-danger {
+            background-color: #d9534f;
+            border-color: #d43f3a;
+        }
+        .btn-danger:hover {
+            background-color: #c9302c;
+            border-color: #ac2925;
+        }
+        .btn-info {
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
+        .btn-info:hover {
+            background-color: #31b0d5;
+            border-color: #269abc;
+        }
+        
+        /* 输入框和表单样式 */
+        .form-control {
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+        .form-control:focus {
+            border-color: #66afe9;
+            outline: 0;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+        }
+        
+        /* 地址预览区域优化 - 保持一行 */
+        .preview-form-row {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .preview-form-row .form-group {
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+        .preview-form-row #_url {
+            flex-grow: 1;
+            min-width: 300px;
+        }
+        .preview-form-row .checkbox-inline {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .preview-form-row .form-control {
+            display: inline-block;
+            width: auto;
+            min-width: 70px;
+        }
+        .preview-form-row .form-control#filePassword {
+            min-width: 80px;
+        }
+        .preview-form-row .form-control#watermarkTxt {
+            min-width: 100px;
+        }
+        .preview-form-row .form-control#kkkey {
+            min-width: 100px;
+        }
+        .preview-form-row .btn-success {
+            white-space: nowrap;
+        }
+        
+        /* 搜索框优化 */
+        .input-group {
+            width: 100%;
+        }
+        .input-group-btn .btn {
+            border-radius: 0 3px 3px 0;
+        }
+        #searchInput {
+            border-radius: 3px 0 0 3px;
+        }
+        
+        /* 上传区域优化 */
+        #file {
+            padding: 6px;
+        }
+        .input-group-btn .btn {
+            margin-left: 5px;
+        }
+        
+        /* 表格样式优化 */
+        #table {
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        .fixed-table-container {
+            border: none;
+        }
+        .table > thead > tr > th {
+            border-bottom: 2px solid #e7eaec;
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .table > tbody > tr > td {
+            border-top: 1px solid #e7eaec;
+            padding: 12px 8px;
+            vertical-align: middle;
+        }
+        
+        /* 模态框优化 */
+        .modal-content {
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.5);
+        }
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e7eaec;
+            border-radius: 5px 5px 0 0;
+        }
+        .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #e7eaec;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        /* 操作按钮间距 */
+        .btn + .btn {
+            margin-left: 5px;
+        }
+        
+        /* 高亮搜索结果 */
+        .text-danger[style*="background-color: yellow"] {
+            padding: 0 2px;
+            font-weight: bold;
+        }
+        
         /* 禁用状态样式 */
         .disabled-upload {
             opacity: 0.6;
@@ -89,6 +261,19 @@
         }
         .disabled-upload .btn {
             cursor: not-allowed;
+        }
+        .disabled-upload .alert {
+            margin-bottom: 0;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 1200px) {
+            .preview-form-row {
+                flex-wrap: wrap;
+            }
+            .preview-form-row #_url {
+                min-width: 200px;
+            }
         }
     </style>
 </head>
@@ -141,11 +326,11 @@
     <#--  接入说明  -->
     <div class="page-header">
         <h1>支持的文件类型</h1>
-        我们一直在扩展支持的文件类型，不断优化预览的效果，如果您有什么建议，欢迎在kk开源社区留意反馈：<a target='_blank' href="https://t.zsxq.com/09ZHSXbsQ">https://t.zsxq.com/09ZHSXbsQ</a>。
+        我们一直在扩展支持的文件类型，不断优化预览的效果，如果您有什么建议，欢迎在kk开源社区留言反馈：<a target='_blank' href="https://t.zsxq.com/09ZHSXbsQ">https://t.zsxq.com/09ZHSXbsQ</a>。
     </div>
     <div>
         <ol>
-            <li>支持 doc, docx, xls, xlsx, xlsm, ppt, pptx, csv, tsv, dotm, xlt, xltm, dot, dotx, xlam, xla, pages  ,pptm 等 Office 办公文档</li>
+            <li>支持 doc, docx, xls, xlsx, xlsm, ppt, pptx, csv, tsv, dotm, xlt, xltm, dot, dotx, xlam, xla, pages 等 Office 办公文档</li>
             <li>支持 wps, dps, et, ett, wpt 等国产 WPS Office 办公文档</li>
             <li>支持 odt, ods, ots, odp, otp, six, ott, fodt, fods 等OpenOffice、LibreOffice 办公文档</li>
             <li>支持 vsd, vsdx 等 Visio 流程图文件</li>
@@ -160,7 +345,7 @@
             <li>支持 dwg, dxf, dwf, iges , igs, dwt, dng, ifc, dwfx, stl, cf2, plt  等 CAD 模型文件</li>
             <li>支持 txt, xml(渲染), md(渲染), java, php, py, js, css 等所有纯文本</li>
             <li>支持 zip, rar, jar, tar, gzip, 7z 等压缩包</li>
-            <li>支持 jpg, jpeg, png, gif, bmp, ico, jfif, webp, heic ,heif 等图片预览（翻转，缩放，镜像）</li>
+            <li>支持 jpg, jpeg, png, gif, bmp, ico, jfif, webp, heic 等图片预览（翻转，缩放，镜像）</li>
             <li>支持 tif, tiff 图信息模型文件（翻转，缩放）</li>
             <li>支持 tga 图像格式文件</li>
             <li>支持 svg 矢量图像格式文件 （翻转，缩放）</li>
@@ -170,7 +355,7 @@
             <li>支持 drawio 绘图预览</li>
         </ol>
     </div>
-    <#--  输入下载地址预览文件  -->
+     <#--  输入下载地址预览文件  -->
     <div class="panel panel-success">
         <div class="panel-heading">
             <h3 class="panel-title">输入下载地址预览</h3>
@@ -192,10 +377,10 @@
                     <label><input type="checkbox" name="forceUpdatedCache" value="true"/>更新</label>
                     <label><input type="checkbox" name="kkagent" value="true"/>跨域</label>
                     <label><input type="checkbox" id="encryption" name="encryption" value="aes"/>AES</label>
-                    <input type="text" id="filePassword" name="filePassword" placeholder="密码" style="width:40px;">
-                    <input type="text" id="page" name="page" placeholder="页码" style="width:40px;">
-                    <input type="text" id="highlightall" name="highlightall" placeholder="高亮显示" style="width:50px;">
-                    <input type="text" id="watermarkTxt" name="watermarkTxt" placeholder="插入水印" style="width:50px;">
+                    <input type="text" id="filePassword" name="filePassword" placeholder="密码" style="width:50px;">
+                    <input type="text" id="page" name="page" placeholder="页码" style="width:50px;">
+                    <input type="text" id="highlightall" name="highlightall" placeholder="高亮显示" style="width:60px;">
+                    <input type="text" id="watermarkTxt" name="watermarkTxt" placeholder="插入水印" style="width:60px;">
                     <#if isshowkey>
                         <input type="text" id="kkkey" name="key" placeholder="KK秘钥" style="width:60px;">
                     </#if>
@@ -248,7 +433,7 @@
                         </div>
                     </#if>
                 </div>
-				    <div class="col-md-6">
+                <div class="col-md-6">
                     <#-- 搜索框 -->
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" placeholder="搜索文件名..." value="${searchText!''}">
@@ -451,7 +636,7 @@
             sidePagination: 'server',
             pagination: true,
             pageSize: ${homePageSize},
-			pageNumber: ${homePageNumber},//初始化加载页
+            pageNumber: ${homePageNumber}, // 初始化加载页
             pageList: [5, 10, 20, 30, 50, 100],
             search: false,
             searchOnEnterKey: false,
@@ -464,6 +649,7 @@
                 field: 'name',
                 title: '名称',
                 sortable: true,
+                width: '40%',
                 formatter: function(value, row, index) {
                     var iconClass = row.isDirectory ? 'glyphicon glyphicon-folder-open' : 'glyphicon glyphicon-file';
                     var iconColor = row.isDirectory ? '#f0ad4e' : '#337ab7';
@@ -491,15 +677,16 @@
                 field: 'isDirectory',
                 title: '类型',
                 sortable: true,
-                width: 80,
+                width: '10%',
+                align: 'center',
                 formatter: function(value) {
-                    return value ? '文件夹' : '文件';
+                    return value ? '<span class="label label-warning">文件夹</span>' : '<span class="label label-primary">文件</span>';
                 }
             }, {
                 field: 'lastModified',
                 title: '修改时间',
                 sortable: true,
-                width: 150,
+                width: '20%',
                 formatter: function(value) {
                     if (value) {
                         return new Date(value).toLocaleString();
@@ -510,10 +697,11 @@
                 field: 'size',
                 title: '大小',
                 sortable: true,
-                width: 100,
+                width: '10%',
+                align: 'right',
                 formatter: function(value, row) {
                     if (row.isDirectory) {
-                        return '-';
+                        return '<span class="text-muted">-</span>';
                     }
                     if (value) {
                         if (value < 1024) {
@@ -530,17 +718,32 @@
                 field: 'action',
                 title: '操作',
                 align: 'center',
-                width: 200,
+                width: '20%',
+                events: {
+                    'click .btn-info': function(e, value, row, index) {
+                        if (row.isDirectory) {
+                            changeDirectory(row.fullPath);
+                        }
+                    },
+                    'click .btn-success': function(e, value, row, index) {
+                        // 预览链接会自动在新窗口打开，这里不需要额外处理
+                    },
+                    'click .btn-danger': function(e, value, row, index) {
+                        if (row.isDirectory) {
+                            deleteFile(encodeURIComponent(Base64.encode("http://"+row.fullPath)), true);
+                        } else {
+                            deleteFile(encodeURIComponent(Base64.encode("http://"+row.relativePath)), false);
+                        }
+                    }
+                },
                 formatter: function(value, row, index) {
                     if (row.isDirectory) {
-                        return '<button class="btn btn-info btn-sm" onclick="changeDirectory(\'' + row.fullPath + '\')">进入</button> ' +
-                               '<button class="btn btn-danger btn-sm" style="margin-left:5px;" onclick="deleteFile(\'' + encodeURIComponent(Base64.encode("http://"+row.fullPath)) + '\', true)">删除</button>';
+                        return '<button class="btn btn-info btn-sm">进入</button>' +
+                               '<button class="btn btn-danger btn-sm" style="margin-left:5px;">删除</button>';
                     } else {
-                        // 构建预览URL
                         var previewUrl = buildFilePreviewUrl(row);
-                        
-                        return '<a class="btn btn-success btn-sm" target="_blank" href="' + previewUrl + '">预览</a> ' +
-                               '<button class="btn btn-danger btn-sm" style="margin-left:5px;" onclick="deleteFile(\'' + encodeURIComponent(Base64.encode("http://"+row.relativePath)) + '\', false)">删除</button>';
+                        return '<a class="btn btn-success btn-sm" target="_blank" href="' + previewUrl + '">预览</a>' +
+                               '<button class="btn btn-danger btn-sm" style="margin-left:5px;">删除</button>';
                     }
                 }
             }],
@@ -548,6 +751,10 @@
                 return {
                     classes: row.isDirectory ? 'folder-row' : 'file-row'
                 };
+            },
+            onPostBody: function() {
+                // 表格渲染完成后，调整表头对齐方式
+                $('.fixed-table-header th').css('vertical-align', 'middle');
             }
         }).on('load-success.bs.table', function (e, data) {
             console.log('表格数据加载成功');
@@ -567,8 +774,6 @@
         </#if>
         return previewUrl;
     }
-    
-
     
     // 切换目录
     function changeDirectory(path) {
