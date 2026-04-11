@@ -3,6 +3,7 @@ import base64
 import os
 import pathlib
 import sys
+import uuid
 
 import winrm
 
@@ -33,30 +34,20 @@ def main() -> int:
     artifact_name = optional_env("KK_DEPLOY_ARTIFACT_NAME", "kkfileview-server-jar")
     repository = require_env("GITHUB_REPOSITORY_NAME")
     run_id = require_env("GITHUB_RUN_ID_VALUE")
-    github_token = require_env("GITHUB_TOKEN_VALUE")
+    artifact_token = require_env("KK_DEPLOY_ARTIFACT_TOKEN")
     dry_run = optional_env("KK_DEPLOY_DRY_RUN", "false").lower()
 
     script_path = pathlib.Path(__file__).with_name("remote_windows_deploy.ps1")
     script_body = script_path.read_text(encoding="utf-8")
-
-    bootstrap = f"""
-$Repository = '{ps_quote(repository)}'
-$RunId = '{ps_quote(run_id)}'
-$ArtifactName = '{ps_quote(artifact_name)}'
-$GitHubToken = '{ps_quote(github_token)}'
-$DeployRoot = '{ps_quote(deploy_root)}'
-$HealthUrl = '{ps_quote(health_url)}'
-$DryRun = '{ps_quote(dry_run)}'
-"""
-
-    payload = (bootstrap + "\n" + script_body).encode("utf-8-sig")
+    payload = script_body.encode("utf-8-sig")
     payload_b64 = base64.b64encode(payload).decode("ascii")
 
     endpoint = f"http://{host}:{port}/wsman"
     session = winrm.Session(endpoint, auth=(username, password), transport="ntlm")
 
-    remote_b64_path = r"C:\Windows\Temp\kkfileview_deploy.b64"
-    remote_ps1_path = r"C:\Windows\Temp\kkfileview_deploy.ps1"
+    suffix = uuid.uuid4().hex
+    remote_b64_path = fr"C:\Windows\Temp\kkfileview_deploy_{suffix}.b64"
+    remote_ps1_path = fr"C:\Windows\Temp\kkfileview_deploy_{suffix}.ps1"
 
     prep = session.run_ps(
         f"""
@@ -85,10 +76,20 @@ New-Item -ItemType File -Path '{ps_quote(remote_b64_path)}' -Force | Out-Null
 $ErrorActionPreference = 'Stop'
 $raw = Get-Content -LiteralPath '{ps_quote(remote_b64_path)}' -Raw
 [System.IO.File]::WriteAllBytes('{ps_quote(remote_ps1_path)}', [Convert]::FromBase64String($raw))
-powershell -NoProfile -ExecutionPolicy Bypass -File '{ps_quote(remote_ps1_path)}'
-$code = $LASTEXITCODE
-Remove-Item '{ps_quote(remote_b64_path)}' -Force -ErrorAction SilentlyContinue
-Remove-Item '{ps_quote(remote_ps1_path)}' -Force -ErrorAction SilentlyContinue
+try {{
+  powershell -NoProfile -ExecutionPolicy Bypass -File '{ps_quote(remote_ps1_path)}' `
+    -Repository '{ps_quote(repository)}' `
+    -RunId '{ps_quote(run_id)}' `
+    -ArtifactName '{ps_quote(artifact_name)}' `
+    -GitHubToken '{ps_quote(artifact_token)}' `
+    -DeployRoot '{ps_quote(deploy_root)}' `
+    -HealthUrl '{ps_quote(health_url)}' `
+    -DryRun '{ps_quote(dry_run)}'
+  $code = $LASTEXITCODE
+}} finally {{
+  Remove-Item '{ps_quote(remote_b64_path)}' -Force -ErrorAction SilentlyContinue
+  Remove-Item '{ps_quote(remote_ps1_path)}' -Force -ErrorAction SilentlyContinue
+}}
 exit $code
 """
     )

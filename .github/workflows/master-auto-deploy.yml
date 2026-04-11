@@ -5,6 +5,10 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+concurrency:
+  group: master-auto-deploy-production
+  cancel-in-progress: false
+
 permissions:
   contents: read
   actions: read
@@ -40,7 +44,7 @@ jobs:
     env:
       GITHUB_REPOSITORY_NAME: ${{ github.repository }}
       GITHUB_RUN_ID_VALUE: ${{ github.run_id }}
-      GITHUB_TOKEN_VALUE: ${{ github.token }}
+      KK_DEPLOY_ARTIFACT_TOKEN: ${{ secrets.KK_DEPLOY_ARTIFACT_TOKEN }}
       KK_DEPLOY_HOST: ${{ secrets.KK_DEPLOY_HOST }}
       KK_DEPLOY_PORT: ${{ secrets.KK_DEPLOY_PORT }}
       KK_DEPLOY_USERNAME: ${{ secrets.KK_DEPLOY_USERNAME }}
@@ -63,6 +67,7 @@ jobs:
 
       - name: Validate deploy secrets
         run: |
+          test -n "$KK_DEPLOY_ARTIFACT_TOKEN" || (echo "Missing secret: KK_DEPLOY_ARTIFACT_TOKEN" && exit 1)
           test -n "$KK_DEPLOY_HOST" || (echo "Missing secret: KK_DEPLOY_HOST" && exit 1)
           test -n "$KK_DEPLOY_USERNAME" || (echo "Missing secret: KK_DEPLOY_USERNAME" && exit 1)
           test -n "$KK_DEPLOY_PASSWORD" || (echo "Missing secret: KK_DEPLOY_PASSWORD" && exit 1)

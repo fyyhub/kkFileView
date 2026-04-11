@@ -20,17 +20,17 @@
 ## 需要配置的 GitHub Secrets
 
 - `KK_DEPLOY_HOST`
-- `KK_DEPLOY_PORT`
+- `KK_DEPLOY_ARTIFACT_TOKEN`
 - `KK_DEPLOY_USERNAME`
 - `KK_DEPLOY_PASSWORD`
-- `KK_DEPLOY_ROOT`
-- `KK_DEPLOY_HEALTH_URL`
 
-推荐值：
+下面这些可以不配，未配置时会使用默认值：
 
 - `KK_DEPLOY_PORT=5985`
 - `KK_DEPLOY_ROOT=C:\kkFileView-5.0`
 - `KK_DEPLOY_HEALTH_URL=http://127.0.0.1:8012/`
+
+其中 `KK_DEPLOY_ARTIFACT_TOKEN` 建议使用单独的细粒度 token，只授予当前仓库所需的最小读取权限，不要复用默认 `GITHUB_TOKEN` 到生产服务器。
 
 ## Workflow
 

@@ -1,3 +1,13 @@
+param(
+    [Parameter(Mandatory = $true)][string]$Repository,
+    [Parameter(Mandatory = $true)][string]$RunId,
+    [Parameter(Mandatory = $true)][string]$ArtifactName,
+    [Parameter(Mandatory = $true)][string]$GitHubToken,
+    [Parameter(Mandatory = $true)][string]$DeployRoot,
+    [Parameter(Mandatory = $true)][string]$HealthUrl,
+    [string]$DryRun = 'false'
+)
+
 $ErrorActionPreference = 'Stop'
 
 function Write-Step {
@@ -73,23 +83,49 @@ Write-Step "Downloading artifact from GitHub Actions"
 Invoke-WebRequest -Headers $Headers -Uri $Artifact.archive_download_url -OutFile $ArtifactZip
 Expand-Archive -LiteralPath $ArtifactZip -DestinationPath $ExtractDir -Force
 
-$DownloadedJar = Get-ChildItem $ExtractDir -Filter 'kkFileView-*.jar' -Recurse | Select-Object -First 1
-if (-not $DownloadedJar) {
+$DownloadedJars = Get-ChildItem $ExtractDir -Filter 'kkFileView-*.jar' -Recurse
+if (-not $DownloadedJars) {
     throw "No kkFileView jar found inside artifact '$ArtifactName'"
 }
+
+if ($DownloadedJars.Count -ne 1) {
+    throw "Expected exactly one kkFileView jar inside artifact '$ArtifactName', found $($DownloadedJars.Count)"
+}
+
+$DownloadedJar = $DownloadedJars[0]
 
 $Timestamp = Get-Date -Format 'yyyyMMddHHmmss'
 $BackupJar = Join-Path $ReleaseDir ("{0}.{1}.bak" -f $JarName, $Timestamp)
 
 function Stop-KkFileView {
+    $JarPattern = [regex]::Escape($JarName)
     $Processes = Get-CimInstance Win32_Process | Where-Object {
-        $_.Name -match '^java(\.exe)?$' -and $_.CommandLine -like "*-jar $JarName*"
+        $_.Name -match '^java(\.exe)?$' -and $_.CommandLine -and $_.CommandLine -match $JarPattern
     }
 
     foreach ($Process in $Processes) {
         Write-Step "Stopping java process $($Process.ProcessId)"
         Stop-Process -Id $Process.ProcessId -Force -ErrorAction SilentlyContinue
     }
+}
+
+function Wait-KkFileViewStopped {
+    param([int]$TimeoutSeconds = 30)
+
+    $JarPattern = [regex]::Escape($JarName)
+    for ($i = 0; $i -lt $TimeoutSeconds; $i++) {
+        $Processes = Get-CimInstance Win32_Process | Where-Object {
+            $_.Name -match '^java(\.exe)?$' -and $_.CommandLine -and $_.CommandLine -match $JarPattern
+        }
+
+        if (-not $Processes) {
+            return $true
+        }
+
+        Start-Sleep -Seconds 1
+    }
+
+    return $false
 }
 
 function Start-KkFileView {
@@ -119,7 +155,9 @@ Write-Step "Backing up current jar to $BackupJar"
 Copy-Item $JarPath $BackupJar -Force
 
 Stop-KkFileView
-Start-Sleep -Seconds 3
+if (-not (Wait-KkFileViewStopped)) {
+    throw "Timed out waiting for the previous kkFileView process to exit"
+}
 
 Write-Step "Replacing jar with artifact output"
 Copy-Item $DownloadedJar.FullName $JarPath -Force
@@ -129,7 +167,9 @@ Start-KkFileView
 if (-not (Wait-Health -Url $HealthUrl)) {
     Write-Step "Health check failed, rolling back"
     Stop-KkFileView
-    Start-Sleep -Seconds 2
+    if (-not (Wait-KkFileViewStopped)) {
+        throw "Timed out waiting for the failed kkFileView process to exit during rollback"
+    }
     Copy-Item $BackupJar $JarPath -Force
     Start-KkFileView
 
