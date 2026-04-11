@@ -548,8 +548,8 @@ a:focus {
 
 .preview-options {
     display: grid;
-    grid-template-columns: 1fr;
-    align-items: stretch;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
     gap: 12px;
     margin-bottom: 14px;
     overflow: visible;
@@ -558,7 +558,7 @@ a:focus {
 
 .preview-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(108px, 1fr));
     gap: 12px;
     margin-bottom: 0;
     overflow: visible;
@@ -570,6 +570,8 @@ a:focus {
 .preview-grid .form-control {
     width: 100%;
     min-width: 0;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .preview-switches {
@@ -587,7 +589,7 @@ a:focus {
     align-items: center;
     gap: 8px;
     margin: 0;
-    padding: 10px 14px;
+    padding: 10px 12px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.76);
     border: 1px solid rgba(17, 19, 21, 0.08);

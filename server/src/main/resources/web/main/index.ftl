@@ -493,8 +493,8 @@
             search: false,
             searchOnEnterKey: false,
             showSearchButton: false,
-            showRefresh: true,
-            showColumns: true,
+            showRefresh: false,
+            showColumns: false,
             clickToSelect: true,
             locale: 'zh-CN',
             columns: [{
