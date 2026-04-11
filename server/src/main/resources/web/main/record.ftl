@@ -26,6 +26,7 @@
             <li><a href="./integrated">接入说明</a></li>
             <li class="active"><a href="./record">版本发布记录</a></li>
             <li><a href="./sponsor">赞助开源</a></li>
+            <li><a href="./contact">技术支持</a></li>
         </ul>
     </div>
 </nav>
@@ -35,29 +36,15 @@
         <section class="hero-section release-hero">
             <div class="hero-copy">
                 <span class="eyebrow">Release Timeline</span>
-                <h1 class="hero-title">版本记录先看重点，再追历史。</h1>
+                <h1 class="hero-title">版本发布记录</h1>
                 <p class="hero-subtitle">
-                    这一版把发布记录拆成“最新摘要 + 年度时间轴 + 历史归档”。先看升级重点，再决定是否继续深入版本细节。
+                    你可以先看最新版本的升级重点，再顺着时间轴继续了解历史版本细节。
                 </p>
                 <div class="release-badge-row">
                     <span class="tag highlight">最新版本 v5.0</span>
                     <span class="tag brand">发布日期 2026-01-20</span>
                     <span class="tag warn">JDK 21+ 强制要求</span>
                     <span class="tag">PDF / TIF / CAD 异步化</span>
-                </div>
-                <div class="summary-grid">
-                    <div class="summary-panel">
-                        <strong>13</strong>
-                        <span>v5.0 新增能力条目</span>
-                    </div>
-                    <div class="summary-panel">
-                        <strong>4</strong>
-                        <span>v5.0 修复项，含 SSL 自签证书接入问题</span>
-                    </div>
-                    <div class="summary-panel">
-                        <strong>8</strong>
-                        <span>v5.0 更新项，核心是解析链路和异步转换升级</span>
-                    </div>
                 </div>
             </div>
         </section>

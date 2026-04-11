@@ -26,6 +26,7 @@
             <li><a href="./integrated">接入说明</a></li>
             <li><a href="./record">版本发布记录</a></li>
             <li class="active"><a href="./sponsor">赞助开源</a></li>
+            <li><a href="./contact">技术支持</a></li>
         </ul>
     </div>
 </nav>
@@ -35,7 +36,7 @@
         <section class="hero-section release-hero">
             <div class="hero-copy">
                 <span class="eyebrow">Sponsor Open Source</span>
-                <h1 class="hero-title">如果这个项目帮你省下了成本，也欢迎反过来帮它继续跑下去。</h1>
+                <h1 class="hero-title">赞助开源</h1>
                 <p class="hero-subtitle">
                     kkFileView 已持续维护多年，被广泛用于金融、教育、银行、政务和企业内部系统。
                     赞助会直接用于文档站、演示站、服务器和 CDN 等基础开销。
@@ -70,7 +71,7 @@
                         <h3>赞助方式</h3>
                     </div>
                 </div>
-                <p>如果你觉得 kkFileView 对你有帮助，可以通过下面的方式赞助项目。页面信息会继续保留简洁，但视觉上统一到新的主站风格里。</p>
+                <p>如果你觉得 kkFileView 对你有帮助，可以通过下面的方式赞助项目，支持它继续长期维护。</p>
                 <ul>
                     <li>kkFileView 开源至今已多年，社区持续反馈并推动演进。</li>
                     <li>项目 star 与使用规模已经证明它不是“玩具 demo”，而是被真实系统接入的基础能力。</li>

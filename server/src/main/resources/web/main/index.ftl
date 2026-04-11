@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bootstrap-table/bootstrap-table.min.css"/>
     <link rel="stylesheet" href="css/theme.css"/>
-    <link rel="stylesheet" href="css/main-pages.css"/>
+    <link rel="stylesheet" href="css/main-pages.css?v=v1-polish-20260411-3"/>
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.form.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
@@ -75,6 +75,7 @@
             <li><a href="./integrated">接入说明</a></li>
             <li><a href="./record">版本发布记录</a></li>
             <li><a href="./sponsor">赞助开源</a></li>
+            <li><a href="./contact">技术支持</a></li>
         </ul>
     </div>
 </nav>
@@ -84,33 +85,40 @@
         <section class="hero-section">
             <div class="hero-grid single">
                 <div class="hero-copy">
+                    <div class="home-hero-layout">
+                        <div class="home-hero-copy">
                     <span class="eyebrow">Preview Engine / Demo Portal</span>
-                    <h1 class="hero-title">把文件预览接进业务系统，像接一个 URL 一样直接。</h1>
+                <h1 class="hero-title">开源的万能文件预览系统</h1>
                     <p class="hero-subtitle">
-                        kkFileView 把文档、图片、CAD、3D、压缩包和音视频预览收敛成一套统一入口。
-                        这版演示页把“URL 预览”和“本地文件预览”并入同一个工作台，避免同类操作被拆成两段。
+                        kkFileView 提供统一的文件预览入口，覆盖 5 大文件族群、70+ 常见文件类型，支持文件链接预览、上传文件预览，以及业务系统里的常见接入方式。
                     </p>
-                    <div class="hero-stats">
-                        <div class="stat-chip">
-                            <strong>20+</strong>
-                            <span>文件族群覆盖</span>
-                        </div>
-                        <div class="stat-chip">
-                            <strong>JDK 21+</strong>
-                            <span>当前推荐运行环境</span>
-                        </div>
-                        <div class="stat-chip">
-                            <strong>API</strong>
-                            <span>URL 直连式接入</span>
-                        </div>
-                        <div class="stat-chip">
-                            <strong>Demo Lab</strong>
-                            <span>本地上传与目录试跑</span>
-                        </div>
-                    </div>
                     <div class="hero-actions">
                         <a class="hero-link primary" href="#demo-lab">开始体验</a>
                         <a class="hero-link secondary" href="./integrated">查看接入说明</a>
+                        <a class="hero-link secondary" href="./record">版本发布记录</a>
+                        <a class="hero-link secondary" href="./sponsor">赞助开源</a>
+                    </div>
+                        </div>
+                        <div class="home-hero-side">
+                    <div class="doc-stack" aria-hidden="true">
+                        <div class="doc-sheet sheet-word">
+                            <img src="images/hero-icons/word.svg" alt="Word">
+                            <span>DOCX</span>
+                        </div>
+                        <div class="doc-sheet sheet-excel">
+                            <img src="images/hero-icons/excel.svg" alt="Excel">
+                            <span>XLSX</span>
+                        </div>
+                        <div class="doc-sheet sheet-powerpoint">
+                            <img src="images/hero-icons/powerpoint.svg" alt="PowerPoint">
+                            <span>PPTX</span>
+                        </div>
+                        <div class="doc-sheet sheet-pdf">
+                            <img src="images/hero-icons/pdf.svg" alt="PDF">
+                            <span>PDF</span>
+                        </div>
+                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,11 +128,11 @@
             <div class="section-heading">
                 <div>
                     <span class="eyebrow">Capability Map</span>
-                    <h2>能力不止是“能打开”，而是覆盖业务里真正常见的文件流。</h2>
+                    <h2>支持丰富的文件类型预览</h2>
                 </div>
                 <p>
-                    我们把原来首页的长列表改成分类卡片，方便先扫边界，再判断适不适合接入你的系统。
-                    如果你有新增格式建议，欢迎到开源社区继续补充。
+                    你可以先快速扫一遍支持范围，再判断它是否适合接入你的业务系统。
+                    如果你有新增格式建议，也欢迎继续到开源社区补充。
                 </p>
             </div>
             <div class="feature-grid">
@@ -196,7 +204,7 @@
                 <div class="workspace-header">
                     <div>
                         <span class="eyebrow">Demo Lab</span>
-                        <h3>本地文件工作台</h3>
+                        <h3>文件链接预览</h3>
                         <p>这里统一承接两种预览来源：直接输入 URL，或者从本地文件目录里选择文件。参数和操作入口都尽量收在一起。</p>
                     </div>
                     <div class="note-row">
@@ -211,14 +219,6 @@
                     <div class="source-card">
                         <h4>输入 URL 直接试跑</h4>
                         <p>贴入文件地址，按需叠加页码、高亮、水印、AES 和跨域参数，直接在新窗口验证最终预览行为。</p>
-                        <div class="note-row">
-                            <span class="tag brand">URL 即入口</span>
-                            <span class="tag highlight">AES 可选</span>
-                            <span class="tag">页码 / 水印 / 高亮</span>
-                            <#if "${kkkey}" != "false" >
-                                <span class="tag warn">当前实例启用了访问秘钥</span>
-                            </#if>
-                        </div>
                         <#if "${kkkey}" != "false" >
                             <p>
                                 程序已启用秘钥访问。
@@ -232,24 +232,26 @@
                         <div class="preview-panel">
                             <form action="${baseUrl}onlinePreview" target="_blank" id="previewByUrl">
                                 <input type="hidden" name="url"/>
+                                <div class="preview-options">
+                                    <div class="preview-switches">
+                                        <label><input type="checkbox" name="forceUpdatedCache" value="true"/> 更新缓存</label>
+                                        <label><input type="checkbox" name="kkagent" value="true"/> 跨域代理</label>
+                                        <label><input type="checkbox" id="encryption" name="encryption" value="aes"/> AES 加密</label>
+                                    </div>
+                                    <div class="preview-grid">
+                                        <input type="text" id="filePassword" name="filePassword" class="form-control" placeholder="文件密码"/>
+                                        <input type="text" id="page" name="page" class="form-control" placeholder="页码"/>
+                                        <input type="text" id="highlightall" name="highlightall" class="form-control" placeholder="高亮关键字"/>
+                                        <input type="text" id="watermarkTxt" name="watermarkTxt" class="form-control" placeholder="水印文本"/>
+                                        <#if isshowkey>
+                                            <input type="text" id="kkkey" name="key" class="form-control" placeholder="KK 秘钥"/>
+                                        </#if>
+                                    </div>
+                                </div>
                                 <div class="preview-url">
                                     <input type="text" id="_url" class="form-control" placeholder="请输入预览文件 URL，例如 https://example.com/demo.pdf"/>
+                                    <input type="submit" value="立即预览" class="preview-submit">
                                 </div>
-                                <div class="preview-switches">
-                                    <label><input type="checkbox" name="forceUpdatedCache" value="true"/> 更新缓存</label>
-                                    <label><input type="checkbox" name="kkagent" value="true"/> 跨域代理</label>
-                                    <label><input type="checkbox" id="encryption" name="encryption" value="aes"/> AES 加密</label>
-                                </div>
-                                <div class="preview-grid">
-                                    <input type="text" id="filePassword" name="filePassword" class="form-control" placeholder="文件密码"/>
-                                    <input type="text" id="page" name="page" class="form-control" placeholder="页码"/>
-                                    <input type="text" id="highlightall" name="highlightall" class="form-control" placeholder="高亮关键字"/>
-                                    <input type="text" id="watermarkTxt" name="watermarkTxt" class="form-control" placeholder="水印文本"/>
-                                    <#if isshowkey>
-                                        <input type="text" id="kkkey" name="key" class="form-control" placeholder="KK 秘钥"/>
-                                    </#if>
-                                </div>
-                                <input type="submit" value="立即预览" class="preview-submit">
                             </form>
                             <div class="alert alert-danger alert-dismissable hide" role="alert" id="previewCheckAlert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -264,9 +266,8 @@
                 <div class="section-heading">
                     <div>
                         <span class="eyebrow">Local Source</span>
-                        <h2>本地文件与目录预览</h2>
+                        <h2>上传文件预览</h2>
                     </div>
-                    <p>上传文件、创建目录、按文件名搜索，然后直接从下面的文件表格里发起预览。这样本地入口和结果列表会贴在一起。</p>
                 </div>
 
                 <div class="toolbar-grid">

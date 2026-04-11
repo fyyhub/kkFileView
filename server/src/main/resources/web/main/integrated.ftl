@@ -27,6 +27,7 @@
             <li class="active"><a href="./integrated">接入说明</a></li>
             <li><a href="./record">版本发布记录</a></li>
             <li><a href="./sponsor">赞助开源</a></li>
+            <li><a href="./contact">技术支持</a></li>
         </ul>
     </div>
 </nav>
@@ -36,10 +37,9 @@
         <section class="hero-section release-hero">
             <div class="hero-copy">
                 <span class="eyebrow">Integration Guide</span>
-                <h1 class="hero-title">5 分钟把 kkFileView 接进你的前端项目。</h1>
-                <p class="hero-subtitle">
-                    这页不再把所有方案平铺成一长段，而是按场景拆成独立卡片。
-                    默认假设服务地址为 <span class="text-highlight">${baseUrl}</span>。
+                <h1 class="hero-title">5 分钟把 kkFileView 接进你的业务项目。</h1>
+                <p class="hero-subtitle hero-subtitle-inline">
+                    这里按常见接入场景提供示例，方便你直接按需选用。默认假设服务地址为 <span class="text-highlight">${baseUrl}</span>。
                 </p>
                 <div class="note-row">
                     <span class="tag brand">HTTP / HTTPS</span>
