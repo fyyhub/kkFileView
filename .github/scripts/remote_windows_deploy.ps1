@@ -46,7 +46,7 @@ $BinDir = Join-Path $DeployRoot 'bin'
 $StartupScript = Join-Path $BinDir 'startup.bat'
 $ReleaseDir = Join-Path $DeployRoot 'releases'
 $DeployTmp = Join-Path $DeployRoot 'deploy-tmp'
-$BuildOutputDir = Join-Path $SourceRoot 'server\target'
+$BuildOutputDir = Join-Path (Join-Path $SourceRoot 'server') 'target'
 
 if (-not (Test-Path $DeployRoot)) {
     throw "Deploy root not found: $DeployRoot"
@@ -123,6 +123,28 @@ function Invoke-External {
     }
 }
 
+function Assert-SafeSourceRoot {
+    param([string]$PathToCheck)
+
+    $FullPath = [System.IO.Path]::GetFullPath($PathToCheck)
+    $RootPath = [System.IO.Path]::GetPathRoot($FullPath)
+    if ($FullPath.TrimEnd('\') -eq $RootPath.TrimEnd('\')) {
+        throw "Refusing to use drive root as source root: $FullPath"
+    }
+
+    $DangerousLeafNames = @(
+        'Windows',
+        'Users',
+        'Program Files',
+        'Program Files (x86)',
+        'ProgramData'
+    )
+    $LeafName = Split-Path -Leaf $FullPath.TrimEnd('\')
+    if ($DangerousLeafNames -contains $LeafName) {
+        throw "Refusing to use a high-risk source root path: $FullPath"
+    }
+}
+
 $env:JAVA_HOME = $JavaHome
 $env:Path = (Join-Path $JavaHome 'bin') + ';' + (Split-Path -Parent $GitExe) + ';' + (Split-Path -Parent $MvnCmd) + ';' + $env:Path
 
@@ -145,6 +167,8 @@ New-Item -ItemType Directory -Force -Path $ReleaseDir | Out-Null
 New-Item -ItemType Directory -Force -Path $DeployTmp | Out-Null
 
 function Sync-Repository {
+    Assert-SafeSourceRoot -PathToCheck $SourceRoot
+
     if (-not (Test-Path (Join-Path $SourceRoot '.git'))) {
         if (Test-Path $SourceRoot) {
             Remove-Item $SourceRoot -Recurse -Force
@@ -161,6 +185,7 @@ function Sync-Repository {
     }
 
     Write-Step "Fetching latest branch state from origin/$Branch"
+    Invoke-External -FilePath $GitExe -Arguments @('remote', 'set-url', 'origin', $RepoUrl) -WorkingDirectory $SourceRoot
     Invoke-External -FilePath $GitExe -Arguments @('fetch', '--prune', '--depth', '1', 'origin', $Branch) -WorkingDirectory $SourceRoot
     Invoke-External -FilePath $GitExe -Arguments @('checkout', '-B', $Branch, "origin/$Branch") -WorkingDirectory $SourceRoot
     Invoke-External -FilePath $GitExe -Arguments @('reset', '--hard', "origin/$Branch") -WorkingDirectory $SourceRoot

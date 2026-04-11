@@ -11,7 +11,7 @@
 当前自动部署链路采用服务器拉最新源码并本机编译的方式：
 
 1. 通过 WinRM 连接 Windows 服务器
-2. 在服务器上的源码目录执行 `git fetch/reset/clean`，同步到 `origin/master`
+2. 在服务器上的源码目录执行 `git fetch/reset/clean`，同步到 `origin/$KK_DEPLOY_BRANCH`（默认 `master`）
 3. 使用服务器上的 JDK 21 和 Maven 执行 `mvn clean package -Dmaven.test.skip=true`
 4. 备份线上 jar，替换为新构建产物
 5. 使用现有 `startup.bat` 重启，并做健康检查
@@ -23,11 +23,13 @@
 - `KK_DEPLOY_USERNAME`
 - `KK_DEPLOY_PASSWORD`
 
-下面这些可以通过 workflow env 或 GitHub Variables 覆盖；未配置时会使用默认值：
+以下部署参数当前由 workflow 从 GitHub Secrets 读取；如果未单独配置，则使用脚本默认值：
 
 - `KK_DEPLOY_PORT=5985`
 - `KK_DEPLOY_ROOT=C:\kkFileView-5.0`
 - `KK_DEPLOY_HEALTH_URL=http://127.0.0.1:8012/`
+
+下面这些非敏感参数可以通过 workflow env 或 GitHub Variables 覆盖；未配置时会使用默认值：
 - `KK_DEPLOY_REPO_URL=https://github.com/kekingcn/kkFileView.git`
 - `KK_DEPLOY_BRANCH=master`
 - `KK_DEPLOY_SOURCE_ROOT=C:\kkFileView-source`
