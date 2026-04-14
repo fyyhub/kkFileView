@@ -96,6 +96,7 @@
                                 <li>前端解析链路升级：PDF、ODF、3D 模型。</li>
                                 <li>后端异步转换升级：PDF、TIF、视频、CAD。</li>
                                 <li>启动脚本改为自动发现当前发布包中的 jar，并同步更新 Docker 与发布辅助文档。</li>
+                                <li>默认配置策略调整：Office 预览默认使用 PDF 模式，默认隐藏图片/PDF 模式切换按钮；如需保留旧的图片优先体验，请显式设置 <code>office.preview.type=image</code> 与 <code>office.preview.switch.disabled=false</code>。</li>
                             </ul>
                         </div>
                     </div>

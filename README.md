@@ -113,6 +113,7 @@ URL：[https://file.kkview.cn](https://file.kkview.cn)
 6. tif backend async conversion optimization - Implemented multi-threaded asynchronous conversion
 7. Video backend async conversion optimization - Implemented multi-threaded asynchronous conversion
 8. CAD backend async conversion optimization - Implemented multi-threaded asynchronous conversion
+9. Default preview configuration strategy adjusted - Office preview now defaults to PDF mode, the mode switch is hidden by default, and PDF preview opens with the thumbnail sidebar visible. If you need the previous image-first behavior after upgrade, explicitly set `office.preview.type=image` and `office.preview.switch.disabled=false`.
 
 ### Version 4.4.0 (January 16, 2025)
 
