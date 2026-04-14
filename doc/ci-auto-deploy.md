@@ -3,7 +3,7 @@
 当前线上 Windows 服务器的实际部署信息如下：
 
 - 部署根目录：`C:\kkFileView-5.0`
-- 运行 jar：`C:\kkFileView-5.0\bin\kkFileView-5.0.jar`
+- 运行 jar：`C:\kkFileView-5.0\bin\kkFileView-<当前项目版本>.jar`
 - 启动脚本：`C:\kkFileView-5.0\bin\startup.bat`
 - 运行配置：`C:\kkFileView-5.0\config\test.properties`
 - 健康检查地址：`http://127.0.0.1:8012/`
