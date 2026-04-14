@@ -100,15 +100,15 @@ mvn -B package -Dmaven.test.skip=true --file pom.xml
 
 ## Configuration Notes
 
-Primary runtime config:
+Primary runtime config used by the scripts and defaults committed in this repository:
 
 - `server/src/main/config/application.properties`
 
-Test config:
+Optional environment-specific config:
 
 - `server/src/main/config/test.properties`
 
-Be careful: some environments may explicitly start the app with `test.properties` instead of `application.properties`. Always verify the actual startup command before assuming which config file is active.
+Be careful: the repository defaults point at `application.properties`. If a deployment environment explicitly starts the app with `test.properties`, treat that as an environment-specific override rather than the repository default. Always verify the actual startup command before assuming which config file is active.
 
 Examples of config that commonly affects behavior:
 
@@ -194,10 +194,10 @@ Deployment script:
 
 Important operational detail:
 
-- the Windows server may launch the app from `bin/startup.bat`
-- that startup script can point at a specific config file such as `..\config\test.properties`
+- the committed `bin/startup.bat` in this repo points at `..\config\application.properties`
+- if production uses a different config file, treat that as an out-of-repo server override rather than a repository default
 
-If a production config change “does not take effect”, inspect the actual startup command on the server first.
+If a production config change “does not take effect”, inspect the actual startup command or deployed `startup.bat` on the server first and verify which config file path it is using.
 
 ## Working Conventions For Agents
 
