@@ -65,6 +65,19 @@ URL：[https://file.kkview.cn](https://file.kkview.cn)
 
 ## Change History
 
+### Version 5.0.0 (April 14, 2026)
+
+#### Improvements
+1. Redesigned archive preview into a single workspace with a collapsible tree and inline file preview
+2. Improved archive preview file-type badges and single-image preview styling
+3. Added an agent-focused repository guide for engineering automation and maintenance
+
+#### Fixes
+1. Fixed archive-contained Office files that could stay stuck on loading because repeated extraction appended to existing files
+2. Default Office preview now prefers PDF mode, and PDF preview opens with the thumbnail sidebar visible by default
+3. Updated startup scripts to discover the packaged jar dynamically instead of relying on stale hard-coded jar names
+4. Updated Docker and release helper docs to align with the 5.0.0 release line
+
 ### Version 5.0 (January 20, 2026)
 
 #### Optimizations
