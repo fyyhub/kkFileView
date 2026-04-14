@@ -41,10 +41,10 @@
                     你可以先看最新版本的升级重点，再顺着时间轴继续了解历史版本细节。
                 </p>
                 <div class="release-badge-row">
-                    <span class="tag highlight">最新版本 v5.0</span>
-                    <span class="tag brand">发布日期 2026-01-20</span>
+                    <span class="tag highlight">最新版本 v5.0.0</span>
+                    <span class="tag brand">发布日期 2026-04-14</span>
                     <span class="tag warn">JDK 21+ 强制要求</span>
-                    <span class="tag">PDF / TIF / CAD 异步化</span>
+                    <span class="tag">压缩包工作区预览 / PDF 默认模式</span>
                 </div>
             </div>
         </section>
@@ -53,9 +53,9 @@
             <div class="timeline-year">2026</div>
             <div class="timeline-list">
                 <article class="release-card">
-                    <h3>v5.0</h3>
+                    <h3>v5.0.0</h3>
                     <div class="release-meta">
-                        <span class="tag brand">2026-01-20</span>
+                        <span class="tag brand">2026-04-14</span>
                         <span class="tag highlight">最新稳定版本</span>
                         <span class="tag warn">升级需 JDK 21+</span>
                     </div>
@@ -66,6 +66,8 @@
                                 <li>优化 xlsx、图片、tif、svg、json 解析效果。</li>
                                 <li>优化 FTP 多客户端接入与 marked 解析。</li>
                                 <li>首页支持目录访问，并切换为 POST 服务端分页。</li>
+                                <li>压缩包预览页重构为单工作区布局，支持目录折叠与右侧内嵌预览。</li>
+                                <li>优化压缩包内文件类型标识，以及单图预览页展示样式。</li>
                             </ul>
                         </div>
                         <div class="release-group">
@@ -74,6 +76,7 @@
                                 <li>新增 msg、heic/heif、页码、高亮、AES、Basic Auth、秘钥等能力。</li>
                                 <li>新增防重复转换、异步等待、上传限制与 cadviewer 转换方法。</li>
                                 <li>新增 pptm 支持。</li>
+                                <li>补充面向工程自动化与编码代理的仓库说明文档。</li>
                             </ul>
                         </div>
                         <div class="release-group">
@@ -82,6 +85,8 @@
                                 <li>修复压缩包路径问题与安全问题。</li>
                                 <li>修复图片水印不完整。</li>
                                 <li>修复 SSL 自签证书接入问题。</li>
+                                <li>修复压缩包内 Office 文件重复解压后被追加写坏、导致一直加载中的问题。</li>
+                                <li>Office 默认预览切到 PDF 模式，并默认展开 PDF 缩略图侧栏。</li>
                             </ul>
                         </div>
                         <div class="release-group">
@@ -90,6 +95,7 @@
                                 <li>JDK 版本要求升级到 21 及以上。</li>
                                 <li>前端解析链路升级：PDF、ODF、3D 模型。</li>
                                 <li>后端异步转换升级：PDF、TIF、视频、CAD。</li>
+                                <li>启动脚本改为自动发现当前发布包中的 jar，并同步更新 Docker 与发布辅助文档。</li>
                             </ul>
                         </div>
                     </div>
