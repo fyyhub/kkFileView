@@ -53,15 +53,17 @@
         url = baseUrl + 'getCorsFile?urlPath=' + encodeURIComponent(Base64.encode(url)) + "&key=${kkkey}";
     }
     var viewerUrl = baseUrl + "pdfjs/web/viewer.html?file=" + encodeURIComponent(url);
+	var watermarkEncoded = encodeURIComponent('${watermarkTxt?js_string}');
+    var highlightEncoded = encodeURIComponent('${highlightall?js_string}');
     viewerUrl += "&disablepresentationmode=${pdfPresentationModeDisable}";
     viewerUrl += "&disableopenfile=${pdfOpenFileDisable}";
     viewerUrl += "&disableprint=${pdfPrintDisable}";
     viewerUrl += "&disabledownload=${pdfDownloadDisable}";
     viewerUrl += "&disablebookmark=${pdfBookmarkDisable}";
     viewerUrl += "&disableediting=${pdfDisableEditing}";
-    viewerUrl += "&pdfhighlightall=${highlightall}";
-    viewerUrl += "&watermarktxt=${watermarkTxt}";
-    viewerUrl += "#page=${page?js_string}"; 
+    viewerUrl += "&watermarktxt=" + watermarkEncoded;
+    viewerUrl += "&pdfhighlightall=" + highlightEncoded;
+    viewerUrl += "#page=${page}";   // ?c 确保数字不包含千位分隔符
 	viewerUrl += "&pagemode=thumbs";     
     var iframe = document.getElementById('pdfFrame');
     iframe.src = viewerUrl;
